@@ -5,6 +5,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.pro100svitlo.creditCardNfcReader.enums.EmvCardScheme;
 import com.pro100svitlo.creditCardNfcReader.model.EmvCard;
@@ -86,6 +87,10 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
     public final static String CARD_MIR = EmvCardScheme.MIR.toString();
     public final static String CARD_PROSTIR = EmvCardScheme.PROSTIR.toString();
 
+    private final static String NFC_ISO_DEP = "android.nfc.tech.IsoDep";
+    private final static String NFC_A = "android.nfc.tech.NfcA";
+    private final static String NFC_B = "android.nfc.tech.NfcB";
+
     private final static String NFC_A_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcA]";
     private final static String NFC_B_TAG = "TAG: Tech [android.nfc.tech.IsoDep, android.nfc.tech.NfcB]";
     private final String UNKNOWN_CARD_MESS =
@@ -110,12 +115,17 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
     private String mExpireDate;
     private String mCardType;
 
+    private boolean checkTags() {
+        Log.d("TAG", "checkTags: tags:" + mTag.toString());
+        return mTag.toString().contains(NFC_ISO_DEP) && mTag.toString().contains(NFC_A) || mTag.toString().contains(NFC_ISO_DEP) && mTag.toString().contains(NFC_B);
+    }
+
     private CardNfcAsyncTask(Builder b) {
         mTag = b.mTag;
         if (mTag != null) {
             mInterface = b.mInterface;
             try {
-                if (mTag.toString().equals(NFC_A_TAG) || mTag.toString().equals(NFC_B_TAG)) {
+                if (checkTags()) {
                     execute();
                 } else {
                     if (!b.mFromStart) {
@@ -181,6 +191,7 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
                 mInterface.unknownEmvCard();
             }
         } else {
+            Log.d("DA", "onPostExecute: doNotMoveCardSoFast");
             mInterface.doNotMoveCardSoFast();
         }
         mInterface.finishNfcReadCard();
