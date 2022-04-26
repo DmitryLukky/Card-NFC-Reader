@@ -116,7 +116,6 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
     private String mCardType;
 
     private boolean checkTags() {
-        Log.d("TAG", "checkTags: tags:" + mTag.toString());
         return mTag.toString().contains(NFC_ISO_DEP) && mTag.toString().contains(NFC_A) || mTag.toString().contains(NFC_ISO_DEP) && mTag.toString().contains(NFC_B);
     }
 
