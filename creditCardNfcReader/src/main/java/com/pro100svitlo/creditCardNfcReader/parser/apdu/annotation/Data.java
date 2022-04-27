@@ -1,11 +1,11 @@
 package com.pro100svitlo.creditCardNfcReader.parser.apdu.annotation;
 
+import com.pro100svitlo.creditCardNfcReader.libraryUtils.BitUtils;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import fr.devnied.bitlib.BitUtils;
 
 /**
  * Annotation to describe field information

@@ -2,10 +2,9 @@ package com.pro100svitlo.creditCardNfcReader.parser.apdu.annotation;
 
 import com.pro100svitlo.creditCardNfcReader.iso7816emv.EmvTags;
 import com.pro100svitlo.creditCardNfcReader.iso7816emv.ITag;
+import com.pro100svitlo.creditCardNfcReader.utils.BytesUtils;
 
 import java.lang.reflect.Field;
-
-import fr.devnied.bitlib.BytesUtils;
 
 /**
  * Bean which manage all annotation data

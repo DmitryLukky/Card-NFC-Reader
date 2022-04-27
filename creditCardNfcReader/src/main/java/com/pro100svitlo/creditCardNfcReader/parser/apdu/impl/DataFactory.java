@@ -1,25 +1,16 @@
 package com.pro100svitlo.creditCardNfcReader.parser.apdu.impl;
 
+import com.pro100svitlo.creditCardNfcReader.libraryUtils.BitUtils;
 import com.pro100svitlo.creditCardNfcReader.model.enums.IKeyEnum;
 import com.pro100svitlo.creditCardNfcReader.parser.apdu.annotation.AnnotationData;
 import com.pro100svitlo.creditCardNfcReader.utils.EnumUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Date;
-
-import fr.devnied.bitlib.BitUtils;
 
 /**
  * Factory to parse data
  */
 public final class DataFactory {
-
-	/**
-	 * Logger of this class
-	 */
-	public static final Logger LOGGER = LoggerFactory.getLogger(DataFactory.class.getName());
 
 	/**
 	 * Constant for EN1545-1 (Date format)
@@ -60,8 +51,6 @@ public final class DataFactory {
 	 * 
 	 * @param pAnnotation
 	 *            annotation
-	 * @param pObject
-	 *            the object to set
 	 * @param pBit
 	 *            bit array
 	 */

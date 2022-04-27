@@ -2,18 +2,12 @@ package com.pro100svitlo.creditCardNfcReader.utils;
 
 import com.pro100svitlo.creditCardNfcReader.model.enums.IKeyEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 /**
  * Utils class which provided methods to manipulate Enum
  */
 public final class EnumUtils {
-
-	/**
-	 * Class logger
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(EnumUtils.class);
 
 	/**
 	 * Get the value of and enum from his key
@@ -31,7 +25,7 @@ public final class EnumUtils {
 				return (T) val;
 			}
 		}
-		LOGGER.error("Unknow value:" + pKey + " for Enum:" + pClass.getName());
+		//LOGGER.error("Unknow value:" + pKey + " for Enum:" + pClass.getName());
 		return null;
 	}
 

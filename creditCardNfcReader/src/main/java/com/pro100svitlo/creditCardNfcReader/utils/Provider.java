@@ -6,14 +6,10 @@ import com.pro100svitlo.creditCardNfcReader.enums.SwEnum;
 import com.pro100svitlo.creditCardNfcReader.exception.CommunicationException;
 import com.pro100svitlo.creditCardNfcReader.parser.IProvider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class Provider implements IProvider {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Provider.class);
 
     private IsoDep mTagCom;
 
@@ -31,12 +27,12 @@ public class Provider implements IProvider {
             throw new CommunicationException(e.getMessage());
         }
 
-        LOGGER.debug("resp: " + BytesUtils.bytesToString(response));
         try {
-            LOGGER.debug("resp: " + TlvUtil.prettyPrintAPDUResponse(response));
+            //LOGGER.debug("resp: " + TlvUtil.prettyPrintAPDUResponse(response));
             SwEnum val = SwEnum.getSW(response);
             if (val != null) {
-                LOGGER.debug("resp: " + val.getDetail());
+                throw new RuntimeException("resp: " + val.getDetail());
+                //LOGGER.debug("resp: " + val.getDetail());
             }
         } catch (Exception e) {
         }

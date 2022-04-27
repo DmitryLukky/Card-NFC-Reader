@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.devnied.bitlib.BytesUtils;
-
 /**
  * List of utils methods to manipulate TLV
  */
@@ -341,7 +339,6 @@ public final class TlvUtil {
 	 *            data to parse
 	 * @param pTag
 	 *            tags to find
-	 * @param pAdd
 	 * @return the list of TLV
 	 */
 	public static List<TLV> getlistTLV(final byte[] pData, final ITag... pTag) {

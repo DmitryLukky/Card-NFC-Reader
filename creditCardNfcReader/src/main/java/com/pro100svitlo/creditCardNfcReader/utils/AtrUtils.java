@@ -1,18 +1,15 @@
 package com.pro100svitlo.creditCardNfcReader.utils;
 
-import org.apache.commons.collections4.MultiMap;
-import org.apache.commons.collections4.map.MultiValueMap;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Created by pro100svitlo on 15.05.16.
@@ -20,12 +17,10 @@ import java.util.Collection;
 
 public final class AtrUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AtrUtils.class);
-
     /**
      * MultiMap containing ATR
      */
-    private static final MultiMap<String, String> MAP = new MultiValueMap<String, String>();
+    private static final HashMap<String, String> MAP = new HashMap<String, String>();
 
     static {
         InputStream is = null;
@@ -49,8 +44,9 @@ public final class AtrUtils {
                 } else if (line.startsWith("3")) { // ATR hex
                     currentATR = StringUtils.deleteWhitespace(line.toUpperCase());
                 } else {
-                    LOGGER.debug("Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber
-                            + ") = " + line);
+                    throw new RuntimeException("Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber + ") = " + line);
+//                    LOGGER.debug("Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber
+//                            + ") = " + line);
                 }
             }
         } catch (IOException e) {
@@ -60,50 +56,6 @@ public final class AtrUtils {
             IOUtils.closeQuietly(isr);
             IOUtils.closeQuietly(is);
         }
-    }
-
-    /**
-     * Method used to find description from ATR
-     *
-     * @param pAtr
-     *            Card ATR
-     * @return list of description
-     */
-    @SuppressWarnings("unchecked")
-    public static final Collection<String> getDescription(final String pAtr) {
-        Collection<String> ret = null;
-        if (StringUtils.isNotBlank(pAtr)) {
-            String val = StringUtils.deleteWhitespace(pAtr);
-            for (String key : MAP.keySet()) {
-                if (val.matches("^" + key + "$")) {
-                    ret = (Collection<String>) MAP.get(key);
-                    break;
-                }
-            }
-        }
-        return ret;
-    }
-
-    /**
-     * Method used to find ATR description from ATS (Answer to select)
-     *
-     * @param pAts
-     *            EMV card ATS
-     * @return card description
-     */
-    @SuppressWarnings("unchecked")
-    public static final Collection<String> getDescriptionFromAts(final String pAts) {
-        Collection<String> ret = null;
-        if (StringUtils.isNotBlank(pAts)) {
-            String val = StringUtils.deleteWhitespace(pAts);
-            for (String key : MAP.keySet()) {
-                if (key.contains(val)) { // TODO Fix this
-                    ret = (Collection<String>) MAP.get(key);
-                    break;
-                }
-            }
-        }
-        return ret;
     }
 
     /**
